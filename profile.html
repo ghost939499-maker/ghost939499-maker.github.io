@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile & Wallet</title>
+</head>
+<style>
+
+    
+/* LOGO IMAGE */
+        .logo img {
+          max-height: 40px;      /* Limits the height of the logo */
+          width: 90px;           /* Maintains aspect ratio */
+          object-fit: contain;   /* Keeps it contained in the container */
+          display: block;
+        }
+    
+
+
+.wallet-stats {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    background: #1c1c1c;
+    padding: 15px;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.stat-box h3 {
+    margin: 5px 0;
+    color: #00cec9;
+}
+
+
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+    color: white;
+}
+
+.container {
+    max-width: 500px;
+    margin: 40px auto;
+    background: #111;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    background: #222;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.tab-btn.active {
+    background: #00b894;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 14px;
+    color: #ccc;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: none;
+    background: #222;
+    color: white;
+}
+
+input:disabled {
+    background: #1a1a1a;
+    color: #888;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.edit-btn { background: #00b894; color: white; }
+.save-btn { background: #0984e3; color: white; display: none; }
+
+.wallet-balance {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #00cec9;
+}
+
+.wallet-actions button {
+    width: 48%;
+}
+
+.deposit-btn { background: #yellow; }
+.withdraw-btn { background: #orange; }
+
+.transaction {
+    background: #1c1c1c;
+    padding: 8px;
+    margin-top: 8px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showSection('profile')">Profile</button>
+        <button class="tab-btn" onclick="showSection('wallet')">Wallet</button>
+    </div>
+
+    <!-- PROFILE SECTION -->
+    
+    
+    
+    
+    <div id="profile" class="section active">
+        <h4>User Profile</h4>
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" value="*******" disabled>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" value="*******" disabled>
+        </div>
+
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="text" value="*******" disabled>
+        </div>
+        
+        
+        
+
+        <button class="edit-btn" onclick="enableEdit()">Edit Profile</button>
+        <button class="save-btn" onclick="saveProfile()">Save</button>
+    </div>
+
+    <!-- WALLET SECTION -->
+    <div id="wallet" class="section">
+        <h3>💰 Wallet Overview</h3>
+        <div class="wallet-balance">Balance: $<span id="balance">500</span></div>
+        
+  
+        <div class="wallet-stats">
+            <div class="stat-box">
+                <p>Wallet Balance</p>
+                <h3>$<span id="balance">0.00</span></h3>
+            </div>
+            <div class="stat-box">
+                <p>Total Invested</p>
+                <h3>$<span id="invested">500.00</span></h3>
+            </div>
+            <div class="stat-box">
+                <p>Total Profit</p>
+                <h3>$<span id="profit">0.00</span></h3>
+            </div>
+        </div>
+        
+        
+        
+
+        <div class="wallet-actions">
+            <button class="deposit-btn" onclick="deposit()"><a href="deposit.html">Deposit
+    </a></button>
+            <button class="withdraw-btn" onclick="withdraw()">Withdraw</button>
+        </div>
+
+
+</div>
+
+<script>
+
+
+function showSection(sectionId) {
+    document.querySelectorAll(".section").forEach(sec => sec.classList.remove("active"));
+    document.getElementById(sectionId).classList.add("active");
+
+    document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+    event.target.classList.add("active");
+}
+
+function enableEdit() {
+    document.querySelectorAll("#profile input").forEach(input => input.disabled = false);
+    document.querySelector(".edit-btn").style.display = "none";
+    document.querySelector(".save-btn").style.display = "inline-block";
+}
+
+function saveProfile() {
+    document.querySelectorAll("#profile input").forEach(input => input.disabled = true);
+    document.querySelector(".edit-btn").style.display = "inline-block";
+    document.querySelector(".save-btn").style.display = "none";
+    alert("Profile Updated!");
+}
+
+function deposit() {
+    let amount = prompt("Enter deposit amount:");
+    if(amount && amount > 0) {
+        balance += parseFloat(amount);
+        updateWallet("Deposited $" + amount);
+    }
+}
+
+function withdraw() {
+    let amount = prompt("Enter withdrawal amount:");
+    if(amount && amount > 0 && amount <= balance) {
+        balance -= parseFloat(amount);
+        updateWallet("Withdrew $" + amount);
+    } else {
+        alert("Insufficient balance!");
+    }
+}
+
+function updateWallet(message) {
+    document.getElementById("balance").innerText = balance.toFixed(2);
+
+    const transaction = document.createElement("div");
+    transaction.classList.add("transaction");
+    transaction.innerText = message;
+
+    document.getElementById("transactions").prepend(transaction);
+}
+</script>
+
+
+    <button onclick="logout()">Logout</button>
+</div>
+
+<script src="auth.js"></script>
+<script>
+    checkLogin();
+</script>
+
+
+
+
+<script src="auth.js"></script>
+<script>
+    checkLogin();
+</script>
+
+</body>
+</html>
+
+
+</body>
+</html>
