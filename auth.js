@@ -28,3 +28,22 @@ function signup() {
     alert("Account created successfully");
     window.location.href = "login.html";
 }
+
+
+function login() {
+    const username = document.getElementById("li-username").value.trim();
+    const password = document.getElementById("li-password").value.trim();
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const user = users.find(
+        u => u.username === username && u.password === password
+    );
+
+    if (user) {
+        localStorage.setItem("loggedInUser", username);
+        window.location.href = "profile.html";
+    } else {
+        alert("Incorrect username or password");
+    }
+}
