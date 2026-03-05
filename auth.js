@@ -11,28 +11,24 @@ function saveUsers(users) {
 // SIGN UP
 function signup() {
     const username = document.getElementById("su-username").value;
-    const email = document.getElementById("su-email").value;
-    const fullname = document.getElementById("su-fullname").value;
     const password = document.getElementById("su-password").value;
-    const phone = document.getElementById("su-phone").value;
-    const country = document.getElementById("su-country").value;
 
-    if (!username || !email || !fullname || !password) {
-        alert("Please fill in all required fields");
+    if (!username || !password) {
+        alert("Fill all fields");
         return;
     }
 
     const users = getUsers();
 
-    if (users.find(u => u.username === username || u.email === email)) {
-        alert("Username or email already exists");
+    if (users.find(u => u.username === username)) {
+        alert("Username already exists");
         return;
     }
 
-    users.push({ username, email, fullname, password, phone, country });
+    users.push({ username, password });
     saveUsers(users);
 
-    alert("Account created successfully!");
+    alert("Account created successfully");
     window.location.href = "login.html";
 }
 
@@ -54,24 +50,13 @@ function login() {
     }
 }
 
-// Get current logged-in user
-function getCurrentUser() {
-    const username = localStorage.getItem("loggedInUser");
-    const users = getUsers();
-    return users.find(u => u.username === username);
-}
-
 // CHECK LOGIN
 function checkLogin() {
-    const user = getCurrentUser();
+    const user = localStorage.getItem("loggedInUser");
     if (!user) {
         window.location.href = "login.html";
     } else {
-        document.getElementById("user").textContent = user.username;
-        document.getElementById("fullname").textContent = user.fullname;
-        document.getElementById("email").textContent = user.email;
-        document.getElementById("phone").textContent = user.phone || "-";
-        document.getElementById("country").textContent = user.country || "-";
+        document.getElementById("user").textContent = user;
     }
 }
 
@@ -79,8 +64,6 @@ function checkLogin() {
 function logout() {
     localStorage.removeItem("loggedInUser");
     window.location.href = "login.html";
-    
-    
 }
 
 
