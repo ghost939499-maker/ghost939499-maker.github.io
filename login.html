@@ -23,9 +23,9 @@ body {
 }
 
 .auth-container, .profile-container {
-    background: white;
+    background: #fff;
     padding: 30px;
-    width: 320px;
+    width: 330px;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     text-align: center;
@@ -43,21 +43,20 @@ button {
     width: 100%;
     padding: 12px;
     background: #2563eb;
-    color: white;
+    color: #fff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
-    margin-top: 10px;
 }
 
 button:hover {
     background: #1e40af;
 }
 
-.note {
-    font-size: 13px;
-    color: #666;
-    margin-top: 15px;
+a {
+    color: #2563eb;
+    text-decoration: none;
+
 }</style>
 
 
@@ -65,21 +64,19 @@ button:hover {
 
 <body>
     
-
 <div class="auth-container">
     <h2>Login</h2>
 
-    <input type="text" id="li-username" placeholder="Username" required>
-    <input type="password" id="li-password" placeholder="Password" required>
+    <input type="text" id="li-username" placeholder="Username">
+    <input type="password" id="li-password" placeholder="Password">
 
-    <button onclick="login()">Login</button>
+    <!-- IMPORTANT: type="button" -->
+    <button type="button" onclick="login()">Login</button>
 
     <p>Don’t have an account?
-        <a href="signup.html">Sign up</a>
+        <a href="signup.html">Create one</a>
     </p>
 </div>
-
-<script src="auth.js"></script>
 
 <script src="auth.js"></script>
 
